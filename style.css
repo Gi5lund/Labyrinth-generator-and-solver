@@ -1,0 +1,53 @@
+--COLS
+--ROW
+
+.body{
+    font-family:Arial, Helvetica, sans-serif;
+}
+.wall-north{
+border-top: 1px solid black;
+}
+.wall-south{
+border-bottom: 1px solid black;
+}
+.wall-east{
+border-right: 1px solid black;
+}
+.wall-west{
+   border-left:  1px solid black;
+}
+.cell{
+    width: 50px;
+    height: 50px;
+    box-sizing: border-box;
+    background-color: burlywood;
+   
+}
+#maze{
+    display: grid;
+    border: 3px solid black;
+    grid-template-columns: repeat(var(--COLS), 50px);
+}
+#maze-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.start{
+    background-color: green;
+}
+.end{
+    background-color: red;
+}
+.path{
+    color:blue;
+    font-size: x-small;
+}
+#maze-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    padding: 8px;
+    margin: 8px;
+}

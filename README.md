@@ -1,0 +1,1 @@
+#generator: jeg har brugt Wilson'algoritme

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>labyrinth Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="controls">
+        <label for="lab-rows">Rows</label>
+        <input id="rows" type="number" name="lab-rows" placeholder="number of rows" required><br>
+        <label for="lab-cols">Columns</label>
+        <input id="cols" type="number" name="lab-cols" placeholder="number of columns"required> <br>
+        <label for="start-row">Start Row</label>
+        <input id="start-row" type="number" name="start-row" placeholder="row number for start position" required> 
+        <label for="start-col">Start Column</label>
+        <input id="start-col" type="number" name="start-col" placeholder="column number for start position" required> <br>
+        <label for="end-row">End Row</label>
+        <input id="end-row" type="number" name="end-row"  placeholder="row number for end position" required> 
+        <label for="end-col">End Column</label>
+        <input id="end-col" type="number" name="end-col"  placeholder="column number for end position" required> <br>
+
+        <button id="generate">Generate</button>
+    </div>
+    <div id="maze-container"> 
+        <div id="maze"></div>
+</div>
+   
+    <script type="module" src="controller/controller.js"></script>
+</body>
+</html>
