@@ -5,6 +5,7 @@ export class MazeModel{
        this.start={};
        this.goal={};
        this.maze=[];
+       this.path=[];
       
     }
     setRows(rows){
@@ -107,15 +108,26 @@ export class MazeModel{
         return neighbors;
 
     }
-    getUnvisitedNeighbors(neighbors,visited){
-        let unvisitedNeighbors=[];
-        for(let i=0;i<neighbors.length;i++){
-            if(!visited.has(neighbors[i])){
-                unvisitedNeighbors.push(neighbors[i]);
+    getUnvisitedNeighbors(validNeighborNodes, visited) {
+        let unvisitedNeighbors = [];
+        if (visited instanceof Set) {
+            // If visited is a Set
+            for (let i = 0; i < validNeighborNodes.length; i++) {
+                if (!visited.has(validNeighborNodes[i])) {
+                    unvisitedNeighbors.push(validNeighborNodes[i]);
+                }
             }
+        } else if (Array.isArray(visited)) {
+            // If visited is an array
+            for (let i = 0; i < validNeighborNodes.length; i++) {
+                if (!visited.includes(validNeighborNodes[i])) {
+                    unvisitedNeighbors.push(validNeighborNodes[i]);
+                }
+            }
+        } else {
+            throw new Error("Invalid type for visited parameter. It should be either a Set or an array.");
         }
         return unvisitedNeighbors;
-
     }
     removeWall(currentCell,nextCell){
         
@@ -136,5 +148,32 @@ export class MazeModel{
                 nextCell.north=false;
             }
         }
+    }
+    addCellToPath(cell){
+        this.path.push(cell);
+    }
+    getPath(){
+        return this.path;
+    }
+    countOpenings(cell){
+        return (cell.north?0:1)+(cell.east?0:1)+(cell.south?0:1)+(cell.west?0:1);
+    }
+    getValidPath(cell){ //SEWN er search from stack  NWES er push to stack
+        let neighbors=[];
+       
+       if(!cell.north && cell.row-1>=0){
+        //push the north neighbor from the list of neighbors
+           neighbors.push(this.maze[cell.row-1][cell.col])
+       }
+       if(!cell.west&&cell.col-1>=0){
+           neighbors.push(this.maze[cell.row][cell.col-1])
+       }
+        if(!cell.east&&cell.col+1<this.cols){
+              neighbors.push(this.maze[cell.row][cell.col+1])
+         }
+        if(!cell.south&&cell.row+1<this.rows){
+                neighbors.push(this.maze[cell.row+1][cell.col])
+            }
+        return neighbors;
     }
 }

@@ -65,17 +65,81 @@ class Controller {
                 self.downloadJSON(data,filename);
                 
             });
+            document.querySelector("#solve").addEventListener('click',()=>{
+                //self.controller.solveMaze();
+                this.solveMaze();                 
+            });
         };
-    downloadJSON(data, filename) {
-        const json = JSON.stringify(data, null, 3);
-        const blob = new Blob([json], {type: 'application/json'});
-        const href = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = href;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
+        downloadJSON(data, filename) {
+            const json = JSON.stringify(data, null, 3);
+            const blob = new Blob([json], {type: 'application/json'});
+            const href = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = href;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+                }
 
-}
+            // handleImport(files) {
+            //     const file = files[0];
+            //     const reader = new FileReader();
+            
+            //     reader.onload = function(event) {
+            //         const importedData = JSON.parse(event.target.result);
+            //         // Do something with the imported data, such as updating the UI or processing it further
+            //         console.log('Imported maze data:', importedData);
+            //     };
+            
+            //     reader.readAsText(file);
+            // }
+
+        solveMaze(){
+            // define startcell
+            let startCell=this.model.maze[this.model.start.row][this.model.start.col]; //otherwise the walls will be missing
+            // define goalcell
+            let goalCell=this.model.maze[this.model.goal.row][this.model.goal.col];
+            let unvisited=[]
+            let path=[];
+           
+            unvisited.push(startCell);
+            while(unvisited.length!==0){
+        // define currentcell
+            let currentCell=unvisited.pop();           
+             path.push(currentCell);
+            // solution condition:
+            if(currentCell.row===goalCell.row && currentCell.col===goalCell.col){
+                console.log('Maze solved');  
+                const solutionPath= this.cleanPathVisited(path);
+                this.model.path=solutionPath;
+                this.view.showpath(this.model.path);
+                return true;
+            }
+            //get available neighbors:
+            let neighbors=this.model.getValidPath(currentCell)
+            let unvisitedNeighbors=this.model.getUnvisitedNeighbors(neighbors,path);
+            
+            for(let unvisitednode of unvisitedNeighbors){
+                unvisitednode.prev=currentCell;
+                unvisited.push(unvisitednode);
+            }       
+
+
+        }
+        
+    }
+    cleanPathVisited(path) {
+            let cleanedPath = [];
+            const goal=path[path.length-1];
+            const start=path[0];
+            let currentnode=goal;
+            while(currentnode.prev){
+            cleanedPath.unshift(currentnode);
+            currentnode=currentnode.prev;
+        }
+        cleanedPath.unshift(start);
+        return cleanedPath;
+    }
+    
+    }

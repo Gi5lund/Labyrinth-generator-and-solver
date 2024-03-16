@@ -30,31 +30,7 @@ export class LabyrinthView{
         });
        
     };
-    // updatePath(model,write){
-    //     const path=model.path;
-    //     // const mazeDiv=document.querySelector('#maze');
-    //     for(let i=0; i<path.length; i++){
-    //         const cell=path[i];
-    //         console.log("updatePath, cell",cell);
-    //         const cellDiv=this.mazeDiv.children[cell.row].children[cell.col];
-    //         if(!write){
-    //             // cellDiv.classList.remove('path');
-    //             cellDiv.innerHTML='';
-    //         }else{
-    //         cellDiv.classList.add('path');}
-    //         if(i>0 && i<path.length-1){
-    //             const prevCell=path[i-1];
-    //             if(cell.row!==prevCell.row){
-    //                 cellDiv.textContent='|';
-    //             }           
-    //             if(cell.col!==prevCell.col){
-    //                 cellDiv.textContent='--';
-    //             }
-    //         }
-    //         cellDiv.textContent='x';
-    //     }
-    // }
-    
+  
     createMaze(model){
         const cols=this.model.cols;
        
@@ -96,6 +72,39 @@ export class LabyrinthView{
             }
        }
        return mazeDiv;
+    }
+    showpath(path){
+        console.log(path);
+        let remainingNodes=[];
+        path.forEach(node=>{
+            remainingNodes.push(node);
+        });
+       remainingNodes.reverse();
+       console.log(remainingNodes,"remainingNodes");
+        const cells=document.querySelectorAll('.cell');
+        
+        console.log(remainingNodes);
+        while(remainingNodes.length>0){
+            let node=remainingNodes.pop();
+            console.log(node);
+            console.log(node.value);
+            const row=node.row;
+            const col=node.col;
+            const index=row*this.model.cols+col;
+            const cell=cells[index];
+        //     if(node.prev){
+        //    if(node.row===node.prev.row){
+        //     // cell.textContent='←';
+        //     cell.textContent='--';
+        //    }else{
+        //     //    cell.textContent='↑';
+        //        cell.textContent='|';}
+        //     cell.classList.add('path');}
+           cell.classList.add('path');
+            cell.textContent= "▪";
+            
+              //
+        }
     }
     
 }

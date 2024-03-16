@@ -5,16 +5,16 @@
     font-family:Arial, Helvetica, sans-serif;
 }
 .wall-north{
-border-top: 1px solid black;
+border-top: 4px solid black;
 }
 .wall-south{
-border-bottom: 1px solid black;
+border-bottom: 4px solid black;
 }
 .wall-east{
-border-right: 1px solid black;
+border-right: 4px solid black;
 }
 .wall-west{
-   border-left:  1px solid black;
+   border-left:  4px solid black;
 }
 .cell{
     width: 50px;
@@ -35,13 +35,16 @@ border-right: 1px solid black;
 }
 .start{
     background-color: green;
+    padding: 5%;
 }
 .end{
     background-color: red;
 }
 .path{
     color:blue;
-    font-size: x-small;
+    font-size: xx-large;
+    text-align: center;
+    justify-content: center;
 }
 #maze-container{
     display: flex;
