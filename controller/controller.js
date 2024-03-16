@@ -17,6 +17,7 @@ class Controller {
 
   
     setupEventlisteners() {
+        const self=this;
        document.addEventListener('generate', event => {
                console.log('generate event', event.detail);
         
@@ -50,7 +51,31 @@ class Controller {
                 this.model.createMaze();
                 this.view.createMaze(this.model);
             });
-            
+
+            document.querySelector('#exportButton').addEventListener('click', ()=> {
+                const data={
+                    rows: self.model.rows,
+                    cols: self.model.cols,
+                    start: self.model.start,
+                    goal: self.model.goal,
+                    maze: self.model.maze
+                };
+                console.log('exportButton, data:',data);
+                const filename='mazeData.json';
+                self.downloadJSON(data,filename);
+                
+            });
         };
+    downloadJSON(data, filename) {
+        const json = JSON.stringify(data, null, 3);
+        const blob = new Blob([json], {type: 'application/json'});
+        const href = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = href;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 
 }

@@ -28,6 +28,7 @@ export class LabyrinthView{
                     goalcol:goalcol}});
                 document.dispatchEvent(generateEvent);
         });
+       
     };
     // updatePath(model,write){
     //     const path=model.path;
