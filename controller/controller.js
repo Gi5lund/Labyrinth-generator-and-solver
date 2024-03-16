@@ -69,6 +69,9 @@ class Controller {
                 //self.controller.solveMaze();
                 this.solveMaze();                 
             });
+            document.querySelector("#importMaze").addEventListener('change', event => {
+                this.handleImport(event.target.files);
+            });
         };
         downloadJSON(data, filename) {
             const json = JSON.stringify(data, null, 3);
@@ -82,18 +85,18 @@ class Controller {
             document.body.removeChild(link);
                 }
 
-            // handleImport(files) {
-            //     const file = files[0];
-            //     const reader = new FileReader();
+            handleImport(files) {
+                const file = files[0];
+                const reader = new FileReader();
             
-            //     reader.onload = function(event) {
-            //         const importedData = JSON.parse(event.target.result);
-            //         // Do something with the imported data, such as updating the UI or processing it further
-            //         console.log('Imported maze data:', importedData);
-            //     };
+                reader.onload = function(event) {
+                    const importedData = JSON.parse(event.target.result);
+                   // TODO: overfør data til UI (lav funktion i view, kald den her)
+                    console.log('Imported maze data:', importedData);
+                };
             
-            //     reader.readAsText(file);
-            // }
+                reader.readAsText(file);
+            }
 
         solveMaze(){
             // define startcell
@@ -142,4 +145,18 @@ class Controller {
         return cleanedPath;
     }
     
+    }
+
+    export async function getMaze() {
+    
+        try {
+            let response = await fetch('./maze.json');
+            let data = await response.json();
+            mazemodel = data;
+          
+            return data;
+        } catch (error) {
+            console.log('Error: ', error);
+        }
+      return mazemodel;
     }
