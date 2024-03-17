@@ -8,17 +8,17 @@ export class MazeModel{
        this.path=[];
       
     }
-    setRows(rows){
+    setRows(rows){//GENERATOR (+SOLVER import-part)
         this.rows=parseInt(rows);
     }
-    setCols(cols){
+    setCols(cols){//GENERATOR (+SOLVER import-part)
         this.cols=parseInt(cols);
     }
-    setStart(row,col){
+    setStart(row,col){ //GENERATOR (+SOLVER import-part)
         this.start.row=parseInt(row);
         this.start.col=parseInt(col);
     }
-    setGoal(row,col){
+    setGoal(row,col){ //GENERATOR (+SOLVER import-part)
         this.goal.row=parseInt(row);
         this.goal.col=parseInt(col);
     }
@@ -28,14 +28,14 @@ export class MazeModel{
     getCols(){
         return this.cols;
     }
-    validateSize(rows,cols){
+    validateSize(rows,cols){ //GENERATOR (+SOLVER import-part)
         console.log('validateInputs, rows:',rows,'cols:',cols);
         if(rows < 4 || rows > 50 || cols < 4 || cols > 50){
             return false;
         }
         return true;
     }
-    validatePos(start,goal){
+    validatePos(start,goal){ //GENERATOR (+SOLVER import-part)
         console.log('validatePos, start:',start,'goal:',goal);
         if(start.row < 0 || start.row >= this.rows || start.col < 0 || start.col >= this.cols || goal.row < 0 || goal.row >= this.rows || goal.col < 0 || goal.col >= this.cols
             || (goal.row === start.row && goal.col=== start.col)){
@@ -45,7 +45,7 @@ export class MazeModel{
         return true;
     }
     
-    createMaze() {
+    createMaze() { //GENERATOR
        let maze=[];
      
        const rows=this.rows;
@@ -91,7 +91,7 @@ export class MazeModel{
         }
         console.log(this);
     }
-    getNeighbors(cell){
+    getNeighbors(cell){ //GENERATOR
         let neighbors=[];
         if(cell.row-1>=0){
             neighbors.push(this.maze[cell.row-1][cell.col]);
@@ -108,7 +108,7 @@ export class MazeModel{
         return neighbors;
 
     }
-    getUnvisitedNeighbors(validNeighborNodes, visited) {
+    getUnvisitedNeighbors(validNeighborNodes, visited) { //SOLVER + GENERATOR
         let unvisitedNeighbors = [];
         if (visited instanceof Set) {
             // If visited is a Set
@@ -129,8 +129,7 @@ export class MazeModel{
         }
         return unvisitedNeighbors;
     }
-    removeWall(currentCell,nextCell){
-        
+    removeWall(currentCell,nextCell){ //GENERATOR
         if(currentCell.row===nextCell.row){
             if(currentCell.col>nextCell.col){
                 currentCell.west=false;
@@ -149,7 +148,7 @@ export class MazeModel{
             }
         }
     }
-    addCellToPath(cell){
+    addCellToPath(cell){ 
         this.path.push(cell);
     }
     getPath(){
@@ -158,7 +157,7 @@ export class MazeModel{
     countOpenings(cell){
         return (cell.north?0:1)+(cell.east?0:1)+(cell.south?0:1)+(cell.west?0:1);
     }
-    getValidPath(cell){ //SEWN er search from stack  NWES er push to stack
+    getValidPath(cell){ //SOLVER: SEWN er search from stack  NWES er push to stack
         let neighbors=[];
        
        if(!cell.north && cell.row-1>=0){

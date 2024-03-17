@@ -20,7 +20,7 @@ class Controller {
         const self=this;
        document.addEventListener('generate', event => {
                console.log('generate event', event.detail);
-        
+                const importfiles=document.querySelector('#importMaze');
             event.preventDefault();
            
                 const rows=event.detail.rows;
@@ -48,11 +48,12 @@ class Controller {
                 }else{
                     alert('Invalid start or goal position');
                 }
+                importfiles.value='';
                 this.model.createMaze();
                 this.view.createMaze(this.model);
             });
 
-            document.querySelector('#exportButton').addEventListener('click', ()=> {
+            document.querySelector('#exportButton').addEventListener('click', ()=> { //GENERATOR
                 const data={
                     rows: self.model.rows,
                     cols: self.model.cols,
@@ -73,7 +74,7 @@ class Controller {
                 this.handleImport(event.target.files);
             });
         };
-        downloadJSON(data, filename) {
+        downloadJSON(data, filename) { //GENERATOR
             const json = JSON.stringify(data, null, 3);
             const blob = new Blob([json], {type: 'application/json'});
             const href = URL.createObjectURL(blob);
@@ -85,20 +86,21 @@ class Controller {
             document.body.removeChild(link);
                 }
 
-            handleImport(files) {
+            handleImport(files) { //SOLVER
                 const file = files[0];
                 const reader = new FileReader();
             
-                reader.onload = function(event) {
+                reader.onload = (event) => {
                     const importedData = JSON.parse(event.target.result);
-                   // TODO: overfør data til UI (lav funktion i view, kald den her)
+                   
+                   this.view.updateControls(importedData);
                     console.log('Imported maze data:', importedData);
                 };
             
                 reader.readAsText(file);
             }
 
-        solveMaze(){
+        solveMaze(){ //SOLVER
             // define startcell
             let startCell=this.model.maze[this.model.start.row][this.model.start.col]; //otherwise the walls will be missing
             // define goalcell
@@ -147,16 +149,16 @@ class Controller {
     
     }
 
-    export async function getMaze() {
+    // export async function getMaze() {
     
-        try {
-            let response = await fetch('./maze.json');
-            let data = await response.json();
-            mazemodel = data;
+    //     try {
+    //         let response = await fetch('./maze.json');
+    //         let data = await response.json();
+    //         mazemodel = data;
           
-            return data;
-        } catch (error) {
-            console.log('Error: ', error);
-        }
-      return mazemodel;
-    }
+    //         return data;
+    //     } catch (error) {
+    //         console.log('Error: ', error);
+    //     }
+    //   return mazemodel;
+    // }

@@ -9,7 +9,7 @@ export class LabyrinthView{
     // init(){
     //     this.createMaze(this.model);
     
-    setupEventlisteners(){
+    setupEventlisteners(){ //GENERATOR 
         const button=document.querySelector('#generate');
         button.addEventListener("click", event =>{
             event.preventDefault();
@@ -31,7 +31,7 @@ export class LabyrinthView{
        
     };
   
-    createMaze(model){
+    createMaze(model){ //GENERATOR
         const cols=this.model.cols;
        
         document.documentElement.style.setProperty('--COLS',cols);
@@ -73,7 +73,7 @@ export class LabyrinthView{
        }
        return mazeDiv;
     }
-    showpath(path){
+    showpath(path){ //SOLVER
         console.log(path);
         let remainingNodes=[];
         path.forEach(node=>{
@@ -92,19 +92,26 @@ export class LabyrinthView{
             const col=node.col;
             const index=row*this.model.cols+col;
             const cell=cells[index];
-        //     if(node.prev){
-        //    if(node.row===node.prev.row){
-        //     // cell.textContent='←';
-        //     cell.textContent='--';
-        //    }else{
-        //     //    cell.textContent='↑';
-        //        cell.textContent='|';}
-        //     cell.classList.add('path');}
+     
            cell.classList.add('path');
             cell.textContent= "▪";
             
-              //
         }
+    }
+    updateControls(model){ //SOLVER IMPORT
+        console.log(model);
+        const rows=document.querySelector('#rows');
+        const cols=document.querySelector('#cols');
+        const startrow=document.querySelector("#start-row");
+        const startcol=document.querySelector("#start-col");
+        const goalrow=document.querySelector("#end-row");
+        const goalcol=document.querySelector("#end-col");
+        rows.value=model.rows;
+        cols.value=model.cols;
+        startrow.value=model.start.row;
+        startcol.value=model.start.col;
+        goalrow.value=model.goal.row;
+        goalcol.value=model.goal.col;
     }
     
 }
