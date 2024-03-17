@@ -1,6 +1,6 @@
-## generator: jeg har brugt Wilson'algoritme  til at generere en labyrint
+## generator: jeg har brugt Wilson'algoritme  til at generere en labyrint: https://en.wikipedia.org/wiki/Maze_generation_algorithm
 
-## solver: jeg har brugt depth-first search (DFS) til at finde en løsning for problemet. jeg har efterfølgende renset stien så kun de trin der fører direkte fra goal til start er medtaget. det er gjort ved at hvert nyt step har fået en 'prev' property som peger på forrige trin
+## solver: jeg har brugt depth-first search (DFS) til at finde en løsning for problemet. jeg har efterfølgende renset stien så kun de trin der fører direkte fra goal til start er medtaget. det er gjort ved at hvert nyt step har fået en 'prev' property som peger på forrige trin. hvert trin gemmes i en stack, stien vises på en gang
 
 ## struktur: mvc med både solver og generator i samme foldere. metodernes tilhørsforhold er markeret med kommentarer i koden - forhåbentlig har jeg ikke glemt nogen
 
